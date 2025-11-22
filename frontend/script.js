@@ -4,7 +4,7 @@
  */
 
 // Configuration
-const API_BASE_URL = ''; // Empty string for same domain (Vercel will route /api to backend)
+const API_BASE_URL = 'https://inkle-ai-assignment.onrender.com';
 
 // Loading messages for multi-agent feedback
 const loadingMessages = [
