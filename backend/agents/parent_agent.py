@@ -1,11 +1,11 @@
 """
 Parent Agent (Tourism AI Agent)
-Orchestrates the multi-agent system using LangGraph.
+Orchestrates the multi-agent system using simple async workflow.
 This demonstrates understanding of AI agent flows and LLM orchestration (JD requirement).
 """
-from typing import Dict, Any, TypedDict, Annotated
-import operator
-from langgraph.graph import StateGraph, END
+from typing import Dict, Any, TypedDict, Optional
+import sys
+import os
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
@@ -32,7 +32,7 @@ class AgentState(TypedDict):
 class ParentAgent:
     """
     Parent Agent: Tourism AI Agent
-    Orchestrates child agents using LangGraph's StateGraph.
+    Orchestrates child agents using simple async workflow pattern.
     
     This is the KEY component demonstrating:
     - Understanding of AI agent flows
@@ -41,7 +41,8 @@ class ParentAgent:
     """
     
     def __init__(self):
-        self.graph = self._build_graph()
+        # No graph needed - we'll orchestrate directly
+        logger.info("Parent Agent initialized with simple async workflow")
     
     def _analyze_intent(self, state: AgentState) -> AgentState:
         """
@@ -145,67 +146,11 @@ class ParentAgent:
         logger.info("Response aggregated successfully")
         return state
     
-    def _route_based_on_intent(self, state: AgentState) -> str:
-        """
-        Determine which node to visit next based on intent.
-        This creates conditional edges in the graph.
-        """
-        query_type = state.get("query_type", "both")
-        
-        if query_type == "weather":
-            return "fetch_weather"
-        elif query_type == "places":
-            return "fetch_places"
-        else:
-            return "fetch_both"
-    
-    def _build_graph(self) -> StateGraph:
-        """
-        Build the LangGraph StateGraph for multi-agent orchestration.
-        
-        This is the KEY method demonstrating AI agent flow understanding.
-        
-        Graph structure:
-        START -> analyze_intent -> [fetch_weather | fetch_places | fetch_both] -> aggregate -> END
-        """
-        # Create the graph
-        workflow = StateGraph(AgentState)
-        
-        # Add nodes
-        workflow.add_node("analyze_intent", self._analyze_intent)
-        workflow.add_node("fetch_weather", self._fetch_weather)
-        workflow.add_node("fetch_places", self._fetch_places)
-        workflow.add_node("fetch_both", self._fetch_both)
-        workflow.add_node("aggregate", self._aggregate_response)
-        
-        # Set entry point
-        workflow.set_entry_point("analyze_intent")
-        
-        # Add conditional edges from analyze_intent
-        workflow.add_conditional_edges(
-            "analyze_intent",
-            self._route_based_on_intent,
-            {
-                "fetch_weather": "fetch_weather",
-                "fetch_places": "fetch_places",
-                "fetch_both": "fetch_both"
-            }
-        )
-        
-        # Add edges to aggregate node
-        workflow.add_edge("fetch_weather", "aggregate")
-        workflow.add_edge("fetch_places", "aggregate")
-        workflow.add_edge("fetch_both", "aggregate")
-        
-        # Add edge to END
-        workflow.add_edge("aggregate", END)
-        
-        # Compile the graph
-        return workflow.compile()
     
     async def process_query(self, location: str) -> Dict[str, Any]:
         """
         Process a user query through the multi-agent system.
+        Simple async orchestration without LangGraph.
         
         Args:
             location: User's location query
@@ -226,8 +171,21 @@ class ParentAgent:
         
         logger.info(f"Processing query for location: {location}")
         
-        # Run the graph
-        final_state = await self.graph.ainvoke(initial_state)
+        # Step 1: Analyze intent
+        state = self._analyze_intent(initial_state)
+        
+        # Step 2: Route based on intent
+        query_type = state.get("query_type", "both")
+        
+        if query_type == "weather":
+            state = await self._fetch_weather(state)
+        elif query_type == "places":
+            state = await self._fetch_places(state)
+        else:  # both
+            state = await self._fetch_both(state)
+        
+        # Step 3: Aggregate response
+        final_state = self._aggregate_response(state)
         
         # Extract response
         response = {

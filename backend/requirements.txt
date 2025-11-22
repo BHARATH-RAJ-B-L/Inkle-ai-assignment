@@ -1,18 +1,11 @@
-# Core FastAPI dependencies
+# Core FastAPI dependencies (production-only, no Rust compilation needed)
 fastapi==0.109.0
 uvicorn[standard]==0.27.0
 httpx==0.26.0
-
-# Pydantic - use newer version with pre-built wheels
 pydantic==2.6.0
 pydantic-settings==2.1.0
 python-dotenv==1.0.0
 
-# LangChain - updated versions with better compatibility
-langgraph==0.0.62
-langchain==0.1.20
-langchain-core==0.1.52
-langchain-openai==0.1.7
-
-# Note: pytest removed - not needed in production
-# Install separately for local testing: pip install pytest pytest-asyncio
+# Note: For local development with full langchain features, install:
+# pip install langgraph langchain langchain-core langchain-openai
+# These are excluded from production to avoid Rust compilation on Render
