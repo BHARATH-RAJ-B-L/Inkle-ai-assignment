@@ -8,7 +8,7 @@ This guide documents the deployment configuration for the TripMind AI multi-agen
 
 The application is currently deployed and accessible at:
 
-- **Frontend:** https://tripmindai.netlify.app
+- **Frontend:** https://69222661e016f04505379855--tripmindai.netlify.app
 - **Backend API:** https://inkle-ai-assignment.onrender.com
 - **API Documentation:** https://inkle-ai-assignment.onrender.com/docs
 - **GitHub Repository:** https://github.com/BHARATH-RAJ-B-L/Inkle-ai-assignment
@@ -39,7 +39,7 @@ The application is currently deployed and accessible at:
 ```bash
 HOST=0.0.0.0
 DEBUG=False
-FRONTEND_URL=https://tripmindai.netlify.app
+FRONTEND_URL=https://69222661e016f04505379855--tripmindai.netlify.app
 NOMINATIM_USER_AGENT=tripmind-production
 ```
 
@@ -79,7 +79,7 @@ Expected response:
 Visit: https://inkle-ai-assignment.onrender.com/docs
 
 ###  Full Test
-1. Visit: https://tripmindai.netlify.app
+1. Visit: https://69222661e016f04505379855--tripmindai.netlify.app
 2. Search for "Bangalore" or any city
 3. Verify weather and places data loads correctly
 
@@ -170,7 +170,7 @@ View deployment history in Netlify Dashboard:
 
 | Resource | URL |
 |----------|-----|
-| **Live Application** | https://tripmindai.netlify.app |
+| **Live Application** | https://69222661e016f04505379855--tripmindai.netlify.app |
 | **Backend API** | https://inkle-ai-assignment.onrender.com |
 | **API Docs (Interactive)** | https://inkle-ai-assignment.onrender.com/docs |
 | **Health Check** | https://inkle-ai-assignment.onrender.com/api/health |

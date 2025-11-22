@@ -8,7 +8,7 @@
 
 ## 📦 Deployment Links
 
-### Live Application **Frontend:** https://tripmindai.netlify.app  
+### Live Application **Frontend:** https://69222661e016f04505379855--tripmindai.netlify.app  
 **Backend API:** https://inkle-ai-assignment.onrender.com  
 **API Documentation:** https://inkle-ai-assignment.onrender.com/docs  
 **GitHub Repository:** https://github.com/BHARATH-RAJ-B-L/Inkle-ai-assignment
@@ -273,7 +273,7 @@ If given more time, I would add:
 ## ⚡ Quick Start (For Reviewers)
 
 1. **Visit Live Application:**
-   https://tripmindai.netlify.app
+   https://69222661e016f04505379855--tripmindai.netlify.app
 
 2. **Test the Application:**
    - Search for "Bangalore" or any city
