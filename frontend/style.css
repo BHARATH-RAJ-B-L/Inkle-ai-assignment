@@ -9,12 +9,12 @@
     --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    
+
     --primary-color: #667eea;
     --primary-dark: #5568d3;
     --secondary-color: #764ba2;
     --accent-color: #f5576c;
-    
+
     /* Neutral Colors */
     --bg-dark: #0f0f23;
     --bg-card: rgba(255, 255, 255, 0.08);
@@ -22,30 +22,30 @@
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-muted: rgba(255, 255, 255, 0.5);
-    
+
     /* Typography */
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-heading: 'Outfit', sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    
+
     /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 16px;
     --radius-lg: 24px;
     --radius-full: 9999px;
-    
+
     /* Shadows */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.25);
     --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
-    
+
     /* Transitions */
     --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -82,7 +82,7 @@ body {
     height: 100%;
     z-index: -1;
     background: var(--bg-dark);
-    background-image: 
+    background-image:
         radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
 }
@@ -420,11 +420,25 @@ body {
     animation: slideInLeft 0.4s ease-out backwards;
 }
 
-.places-list li:nth-child(1) { animation-delay: 0.1s; }
-.places-list li:nth-child(2) { animation-delay: 0.2s; }
-.places-list li:nth-child(3) { animation-delay: 0.3s; }
-.places-list li:nth-child(4) { animation-delay: 0.4s; }
-.places-list li:nth-child(5) { animation-delay: 0.5s; }
+.places-list li:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.places-list li:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.places-list li:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.places-list li:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.places-list li:nth-child(5) {
+    animation-delay: 0.5s;
+}
 
 .places-list li:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -476,6 +490,17 @@ body {
     font-size: 0.85rem;
 }
 
+.api-credits {
+    margin-top: var(--spacing-sm);
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.api-credits strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
 /* === Utility Classes === */
 .hidden {
     display: none !important;
@@ -486,6 +511,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -496,6 +522,7 @@ body {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -507,6 +534,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -518,6 +546,7 @@ body {
         opacity: 0;
         transform: translateX(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -535,28 +564,28 @@ body {
     .container {
         padding: var(--spacing-md);
     }
-    
+
     .hero-title {
         font-size: 2rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
-    
+
     .search-wrapper {
         flex-direction: column;
     }
-    
+
     .plan-button {
         width: 100%;
         justify-content: center;
     }
-    
+
     .success-results {
         grid-template-columns: 1fr;
     }
-    
+
     .temperature {
         font-size: 3rem;
     }
@@ -566,11 +595,11 @@ body {
     .logo h1 {
         font-size: 2rem;
     }
-    
+
     .hero-title {
         font-size: 1.75rem;
     }
-    
+
     .search-input {
         font-size: 1rem;
     }

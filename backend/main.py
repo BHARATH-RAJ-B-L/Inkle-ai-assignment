@@ -2,9 +2,9 @@
 FastAPI Application for Multi-Agent Tourism System
 Demonstrates full-stack AI agent development with proper API design.
 """
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import Optional
 import os
 from dotenv import load_dotenv
@@ -12,8 +12,29 @@ from dotenv import load_dotenv
 from agents import parent_agent
 from utils import format_error_response, logger
 
+# Import settings
+try:
+    from settings import settings
+    RATE_LIMIT_REQUESTS = settings.rate_limit_requests
+    RATE_LIMIT_WINDOW = settings.rate_limit_window
+except ImportError:
+    RATE_LIMIT_REQUESTS = 10
+    RATE_LIMIT_WINDOW = 60
+
+import time
+from collections import defaultdict, Counter
+from datetime import datetime
+
 # Load environment variables
 load_dotenv()
+
+# Application metrics
+app_start_time = datetime.now()
+request_count = 0
+search_stats = Counter()
+
+# Rate limiting storage
+rate_limit_storage = defaultdict(list)
 
 # Create FastAPI app
 app = FastAPI(
@@ -37,6 +58,18 @@ app.add_middleware(
 class TripPlanRequest(BaseModel):
     """Request model for trip planning."""
     location: str
+    
+    @validator('location')
+    def validate_location(cls, v):
+        """Validate location input."""
+        if not v or not v.strip():
+            raise ValueError('Location cannot be empty')
+        if len(v) > 100:
+            raise ValueError('Location name too long (max 100 characters)')
+        # Basic XSS prevention
+        if '<' in v or '>' in v:
+            raise ValueError('Invalid characters in location')
+        return v.strip()
     
     class Config:
         json_schema_extra = {
@@ -80,8 +113,27 @@ async def health_check():
     }
 
 
+@app.get("/api/stats")
+async def get_stats():
+    """
+    Get application statistics and performance metrics.
+    Demonstrates monitoring and analytics capabilities.
+    """
+    uptime_seconds = (datetime.now() - app_start_time).total_seconds()
+    
+    return {
+        "status": "operational",
+        "uptime_seconds": uptime_seconds,
+        "uptime_human": f"{int(uptime_seconds // 3600)}h {int((uptime_seconds % 3600) // 60)}m",
+        "total_requests": request_count,
+        "top_searches": dict(search_stats.most_common(10)),
+        "cache_info": "enabled",
+        "rate_limit": f"{RATE_LIMIT_REQUESTS} requests per {RATE_LIMIT_WINDOW}s"
+    }
+
+
 @app.post("/api/plan-trip", response_model=TripPlanResponse)
-async def plan_trip(request: TripPlanRequest):
+async def plan_trip(request: TripPlanRequest, http_request: Request):
     """
     Main endpoint for trip planning.
     
@@ -89,22 +141,42 @@ async def plan_trip(request: TripPlanRequest):
     - Taking responsibility of the AI agent as a whole
     - Processing user requests through multi-agent system
     - Proper error handling and debugging
+    - Request validation and rate limiting
     
     Args:
         request: Trip planning request with location
+        http_request: FastAPI request object for rate limiting
         
     Returns:
         Trip planning response with weather and/or places information
     """
+    global request_count
+    
+    # Rate limiting
+    client_ip = http_request.client.host
+    current_time = time.time()
+    
+    # Clean old entries
+    rate_limit_storage[client_ip] = [
+        t for t in rate_limit_storage[client_ip] 
+        if current_time - t < RATE_LIMIT_WINDOW
+    ]
+    
+    # Check rate limit
+    if len(rate_limit_storage[client_ip]) >= RATE_LIMIT_REQUESTS:
+        logger.warning(f"Rate limit exceeded for {client_ip}")
+        raise HTTPException(
+            status_code=429,
+            detail=f"Rate limit exceeded. Max {RATE_LIMIT_REQUESTS} requests per {RATE_LIMIT_WINDOW} seconds."
+        )
+    
+    # Record request
+    rate_limit_storage[client_ip].append(current_time)
+    request_count += 1
+    search_stats[request.location.lower()] += 1
+    
     try:
         logger.info(f"Received trip planning request for: {request.location}")
-        
-        # Validate input
-        if not request.location or not request.location.strip():
-            raise HTTPException(
-                status_code=400,
-                detail="Location cannot be empty"
-            )
         
         # Process through parent agent
         result = await parent_agent.process_query(request.location.strip())

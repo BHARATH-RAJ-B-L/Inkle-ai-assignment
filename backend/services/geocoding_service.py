@@ -14,6 +14,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Import settings for retry configuration
+try:
+    from settings import settings
+    MAX_RETRIES = settings.max_retries
+    RETRY_DELAY = settings.retry_delay
+except ImportError:
+    MAX_RETRIES = 3
+    RETRY_DELAY = 1.0
+
 
 class GeocodingService:
     """Service for geocoding location names using Nominatim API."""
@@ -60,7 +69,7 @@ class GeocodingService:
         # Respect rate limit
         await self._respect_rate_limit()
         
-        # Make API request
+        # Prepare request parameters
         params = {
             "q": location,
             "format": "json",
@@ -72,41 +81,50 @@ class GeocodingService:
             "User-Agent": self.user_agent
         }
         
-        try:
-            async with httpx.AsyncClient() as client:
-                response = await client.get(
-                    self.BASE_URL,
-                    params=params,
-                    headers=headers,
-                    timeout=10.0
-                )
-                
-                if response.status_code == 429:
-                    logger.warning("Rate limit exceeded for Nominatim API")
-                    raise RateLimitError("Geocoding rate limit exceeded")
-                
-                response.raise_for_status()
-                data = response.json()
-                
-                if not data:
-                    logger.warning(f"Location not found: {location}")
-                    raise LocationNotFoundError(f"Location '{location}' not found")
-                
-                result = {
-                    "lat": float(data[0]["lat"]),
-                    "lon": float(data[0]["lon"]),
-                    "display_name": data[0]["display_name"]
-                }
-                
-                # Cache the result
-                cache.set(cache_key, result)
-                logger.info(f"Successfully geocoded: {location}")
-                
-                return result
-                
-        except httpx.HTTPError as e:
-            logger.error(f"HTTP error during geocoding: {str(e)}")
-            raise LocationNotFoundError(f"Failed to geocode location: {location}")
+        # Make API request with retry logic
+        for attempt in range(MAX_RETRIES):
+            try:
+                async with httpx.AsyncClient() as client:
+                    response = await client.get(
+                        self.BASE_URL,
+                        params=params,
+                        headers=headers,
+                        timeout=10.0
+                    )
+                    
+                    if response.status_code == 429:
+                        logger.warning("Rate limit exceeded for Nominatim API")
+                        if attempt < MAX_RETRIES - 1:
+                            await asyncio.sleep(RETRY_DELAY * (attempt + 1))
+                            continue
+                        raise RateLimitError("Geocoding rate limit exceeded")
+                    
+                    response.raise_for_status()
+                    data = response.json()
+                    
+                    if not data:
+                        logger.warning(f"Location not found: {location}")
+                        raise LocationNotFoundError(f"Location '{location}' not found")
+                    
+                    result = {
+                        "lat": float(data[0]["lat"]),
+                        "lon": float(data[0]["lon"]),
+                        "display_name": data[0]["display_name"]
+                    }
+                    
+                    # Cache the result
+                    cache.set(cache_key, result)
+                    logger.info(f"Successfully geocoded: {location}")
+                    
+                    return result
+                    
+            except httpx.HTTPError as e:
+                if attempt < MAX_RETRIES - 1:
+                    logger.warning(f"HTTP error during geocoding (attempt {attempt + 1}/{MAX_RETRIES}): {str(e)}")
+                    await asyncio.sleep(RETRY_DELAY * (attempt + 1))
+                    continue
+                logger.error(f"HTTP error during geocoding: {str(e)}")
+                raise LocationNotFoundError(f"Failed to geocode location: {location}")
 
 
 # Global instance
