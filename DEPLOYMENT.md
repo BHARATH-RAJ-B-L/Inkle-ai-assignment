@@ -1,191 +1,181 @@
 # Deployment Guide for TripMind AI
 
-This guide covers deployment options for the Inkle AI assignment submission.
-
-## 🌐 Deployment Options
-
-### Option 1: Vercel (Frontend) + Render (Backend) ⭐ Recommended
-
-#### Frontend Deployment (Vercel)
-1. Push code to GitHub
-2. Go to [vercel.com](https://vercel.com)
-3. Import your repository
-4. Configure:
-   - Build Command: (leave empty, static site)
-   - Output Directory: `frontend`
-   - Install Command: (none needed)
-5. Deploy
-
-#### Backend Deployment (Render)
-1. Go to [render.com](https://render.com)
-2. Create new Web Service
-3. Connect your GitHub repository
-4. Configure:
-   - Build Command: `cd backend && pip install -r requirements.txt`
-   - Start Command: `cd backend && python main.py`
-   - Environment Variables:
-     ```
-     FRONTEND_URL=https://your-frontend.vercel.app
-     ```
-5. Deploy
-
-**Update Frontend**: Edit `frontend/script.js` line 6:
-```javascript
-const API_BASE_URL = 'https://your-backend.onrender.com';
-```
+This guide documents the deployment configuration for the TripMind AI multi-agent tourism system.
 
 ---
 
-### Option 2: Railway (Full Stack)
+## 🌐 Current Deployment
 
-1. Push to GitHub
-2. Go to [railway.app](https://railway.app)
-3. Create new project from GitHub repo
-4. Configure:
-   - Root Directory: `backend`
-   - Start Command: `python main.py`
-5. Add environment variables
-6. Deploy backend and note the URL
-7. Deploy frontend separately or use static hosting
+The application is currently deployed and accessible at:
+
+- **Frontend:** https://tripmindai.netlify.app
+- **Backend API:** https://inkle-ai-assignment.onrender.com
+- **API Documentation:** https://inkle-ai-assignment.onrender.com/docs
+- **GitHub Repository:** https://github.com/BHARATH-RAJ-B-L/Inkle-ai-assignment
 
 ---
 
-### Option 3: Heroku (Full Stack)
+## 🏗️ Architecture
 
-Create `Procfile` in root:
-```
-web: cd backend && python main.py
-```
+### Frontend (Netlify)
+- **Platform:** Netlify
+- **Source:** `frontend/` directory
+- **Build:** Static HTML/CSS/JavaScript (no build step required)
+- **Auto-Deploy:** Enabled (deploys on git push to main)
 
-Create `runtime.txt`:
-```
-python-3.11.0
-```
+### Backend (Render)
+- **Platform:** Render Web Service
+- **Source:** `backend/` directory  
+- **Runtime:** Python 3.13
+- **Root Directory:** `backend`
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
-Deploy:
+---
+
+## ⚙️ Environment Variables (Production)
+
+### Backend (Render)
 ```bash
-heroku create your-app-name
-git push heroku main
-```
-
----
-
-### Option 4: GitHub Pages (Frontend) + PythonAnywhere (Backend)
-
-#### Frontend (GitHub Pages)
-1. Push to GitHub
-2. Go to Settings → Pages
-3. Select branch and `/frontend` folder
-4. Save
-
-#### Backend (PythonAnywhere)
-1. Sign up at [pythonanywhere.com](https://www.pythonanywhere.com)
-2. Upload backend files
-3. Configure WSGI file
-4. Set environment variables
-5. Reload web app
-
----
-
-## 📋 Pre-Deployment Checklist
-
-- [ ] Remove debug statements
-- [ ] Update CORS to allow your frontend domain
-- [ ] Test all API endpoints
-- [ ] Update README with deployment URLs
-- [ ] Add your contact info to SUBMISSION.md
-- [ ] Ensure .env is in .gitignore
-
----
-
-## 🔧 Environment Variables for Production
-
-```bash
-# Backend (.env)
 HOST=0.0.0.0
-PORT=8000
 DEBUG=False
-FRONTEND_URL=https://your-frontend-url.com
-NOMINATIM_USER_AGENT=tripmind-ai-production
-NOMINATIM_EMAIL=your-email@example.com
+FRONTEND_URL=https://tripmindai.netlify.app
+NOMINATIM_USER_AGENT=tripmind-production
 ```
 
----
-
-## 🧪 Testing Deployment
-
-After deployment, test:
-1. Health check: `curl https://your-backend.com/api/health`
-2. API docs: Visit `https://your-backend.com/docs`
-3. Full test: Search "Bangalore" on frontend
+> **Note:** PORT is automatically set by Render ($PORT variable)
 
 ---
 
-## 📤 GitHub Repository Setup
+## 📋 Deployment Checklist
 
-### 1. Initialize Git (if not done)
+- [x] Backend deployed to Render
+- [x] Frontend deployed to Netlify  
+- [x] Environment variables configured
+- [x] CORS enabled for frontend domain
+- [x] API endpoints tested
+- [x] Frontend connected to backend
+- [x] Repository pushed to GitHub
+- [x] Documentation updated
+
+---
+
+## 🧪 Testing Deployed Application
+
+### Health Check
 ```bash
-cd "c:\Users\Bharath Raj B L\Desktop\Inkle ai assignment"
-git init
+curl https://inkle-ai-assignment.onrender.com/api/health
+```
+
+Expected response:
+```json
+{
+  "status": "healthy",
+  "service": "Multi-Agent Tourism System"
+}
+```
+
+### API Documentation
+Visit: https://inkle-ai-assignment.onrender.com/docs
+
+###  Full Test
+1. Visit: https://tripmindai.netlify.app
+2. Search for "Bangalore" or any city
+3. Verify weather and places data loads correctly
+
+---
+
+## 🔧 Redeployment Instructions
+
+### Backend (Render)
+Changes are automatically deployed when you push to GitHub:
+```bash
 git add .
-git commit -m "Initial commit: TripMind AI - Multi-Agent Tourism System"
+git commit -m "Your changes"
+git push origin main
 ```
 
-### 2. Create GitHub Repository
-1. Go to [github.com/new](https://github.com/new)
-2. Name: `tripmind-ai-inkle-assignment`
-3. Public repository
-4. Don't initialize with README (we have one)
+Render will automatically:
+1. Detect the new commit
+2. Pull the latest code
+3. Run build command
+4. Restart the service
 
-### 3. Push to GitHub
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/tripmind-ai-inkle-assignment.git
-git branch -M main
-git push -u origin main
-```
-
-### 4. Make Repository Public
-- Go to Settings → Danger Zone → Change visibility → Make public
+### Frontend (Netlify)
+Same as backend - automatic deployment on git push to main.
 
 ---
 
-## 📝 Final Submission Steps
+## 💡 Render Free Tier Limitations
 
-1. **Deploy Application**
-   - Choose deployment option above
-   - Test thoroughly
+**Sleep Behavior:**
+- Backend sleeps after 15 minutes of inactivity
+- First request after sleep takes ~30 seconds to wake up
+- Subsequent requests are instant
 
-2. **Update SUBMISSION.md**
-   - Add repository URL
-   - Add deployed application URL
-   - Add your contact info
-
-3. **Create Public Links**
-   - Ensure GitHub repo is public
-   - Test deployment URLs work
-   - Verify anyone can access
-
-4. **Submit to Inkle**
-   - Email submission with:
-     - GitHub repository link
-     - Deployed application link
-     - SUBMISSION.md (or copy content to email)
+**Workaround (Optional):**
+Use [UptimeRobot](https://uptimerobot.com) (free) to ping the backend every 5 minutes:
+- URL to monitor: `https://inkle-ai-assignment.onrender.com/api/health`
+- Interval: 5 minutes
 
 ---
 
-## 🎯 Quick Deploy (5 minutes)
+## 🛠️ Troubleshooting
 
-**Fastest option for submission:**
+### Issue: "Failed to connect to server"
+**Solution:** 
+- Check backend is running: visit https://inkle-ai-assignment.onrender.com/api/health
+- If backend is sleeping, wait ~30 seconds for it to wake up
 
-1. Push to GitHub (2 min)
-2. Deploy backend to Render (2 min)
-3. Update frontend API URL (30 sec)
-4. Host frontend on Vercel (30 sec)
-5. Test and submit! ✅
+### Issue: CORS errors in browser console
+**Solution:**
+- Verify `FRONTEND_URL` environment variable in Render matches Netlify URL exactly
+- Redeploy backend after updating variables
 
-**Total time**: ~5 minutes
-**Cost**: $0 (free tiers)
+### Issue: Changes not reflected after git push
+**Solution:**
+- Check deployment logs in Render/Netlify dashboards
+- Verify git push was successful
+- Clear browser cache
 
 ---
 
-Good luck with your submission! 🎉
+## 📊 Monitoring
+
+### Backend Logs
+View real-time logs in Render Dashboard:
+1. Go to https://dashboard.render.com
+2. Click on `inkle-ai-assignment` service
+3. Click "Logs" tab
+
+### Frontend Deployment Status
+View deployment history in Netlify Dashboard:
+1. Go to https://app.netlify.com
+2. Click on `tripmindai` site
+3. Click "Deploys" tab
+
+---
+
+## 🔐 Security Notes
+
+- ✅ `.env` file is gitignored (secrets not in repository)
+- ✅ Environment variables configured in platform dashboards
+- ✅ CORS restricted to frontend domain only
+- ✅ Rate limiting enabled (10 requests/60 seconds per IP)
+- ✅ Input validation and XSS prevention implemented
+
+---
+
+## 📱 Access URLs
+
+| Resource | URL |
+|----------|-----|
+| **Live Application** | https://tripmindai.netlify.app |
+| **Backend API** | https://inkle-ai-assignment.onrender.com |
+| **API Docs (Interactive)** | https://inkle-ai-assignment.onrender.com/docs |
+| **Health Check** | https://inkle-ai-assignment.onrender.com/api/health |
+| **GitHub Repository** | https://github.com/BHARATH-RAJ-B-L/Inkle-ai-assignment |
+
+---
+
+**Deployment Complete!** 🎉 The application is live and publicly accessible.

@@ -4,7 +4,14 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-Latest-purple.svg)](https://github.com/langchain-ai/langgraph)
 
-> **Inkle AI Internship Assignment** - An intelligent multi-agent tourism planning system powered by LangGraph, demonstrating advanced AI agent orchestration, API integration, and premium UX design.
+> An intelligent multi-agent tourism planning system powered by LangGraph, demonstrating advanced AI agent orchestration, API integration, and premium UX design.
+
+## 🌐 Live Demo
+
+- **Application:** https://69222661e016f04505379855--tripmindai.netlify.app/
+- **Backend API:** https://inkle-ai-assignment.onrender.com
+- **API Docs:** https://inkle-ai-assignment.onrender.com/docs
+- **GitHub:** https://github.com/BHARATH-RAJ-B-L/Inkle-ai-assignment
 
 ## 🎯 Project Overview
 
@@ -21,29 +28,6 @@ TripMind AI is a sophisticated multi-agent system that helps users plan trips by
 ✅ **Premium UI/UX** - Glassmorphism effects, smooth animations, responsive design  
 ✅ **Error Handling** - Graceful handling of invalid locations and API failures  
 ✅ **Caching & Rate Limiting** - Optimized for data availability and API compliance  
-
-## 📊 Performance & Production Features
-
-### Performance Metrics
-- ⚡ Average response time: 2-3 seconds
-- 💾 Cache hit rate: 80%+  
-- 🔄 API retry success: 95%+
-- 🚀 Supports 100+ concurrent requests
-
-### Production-Ready Code
-✅ Retry logic with exponential backoff  
-✅ Request validation & XSS prevention  
-✅ Rate limiting (10 req/60s per IP)  
-✅ Health monitoring (`/api/stats`)  
-✅ Environment-based configuration  
-✅ Comprehensive logging  
-✅ Pytest test suite (15+ tests)  
-
-### UX Enhancements
-✅ Dynamic loading messages showing agent progress  
-✅ Keyboard shortcuts (ESC, Ctrl+K)  
-✅ Recent searches with localStorage  
-✅ API attribution footer  
 
 ## 🏗️ Architecture
 
@@ -93,9 +77,10 @@ TripMind AI is a sophisticated multi-agent system that helps users plan trips by
 
 ### Installation
 
-1. **Clone or download the project**
+1. **Clone the repository**
    ```bash
-   cd "c:\Users\Bharath Raj B L\Desktop\Inkle ai assignment"
+   git clone https://github.com/BHARATH-RAJ-B-L/Inkle-ai-assignment
+   cd Inkle-ai-assignment
    ```
 
 2. **Set up Python virtual environment**
@@ -194,8 +179,8 @@ And these are the places you can go,
 ### Backend
 - **Python 3.9+** - Programming language
 - **FastAPI** - Modern async web framework
-- **LangGraph** - Multi-agent orchestration framework ⭐ **KEY FOR JD**
-- **LangChain** - Agent framework and LLM integration ⭐ **KEY FOR JD**
+- **LangGraph** - Multi-agent orchestration framework
+- **LangChain** - Agent framework and LLM integration
 - **Uvicorn** - ASGI server
 - **httpx** - Async HTTP client
 - **Pydantic** - Data validation
@@ -214,11 +199,11 @@ And these are the places you can go,
 ## 📁 Project Structure
 
 ```
-Inkle ai assignment/
+Inkle-ai-assignment/
 ├── backend/
 │   ├── agents/
 │   │   ├── __init__.py
-│   │   ├── parent_agent.py      # LangGraph orchestrator ⭐
+│   │   ├── parent_agent.py      # LangGraph orchestrator
 │   │   ├── weather_agent.py     # Child Agent 1
 │   │   └── places_agent.py      # Child Agent 2
 │   ├── services/
@@ -230,6 +215,7 @@ Inkle ai assignment/
 │   │   ├── __init__.py
 │   │   ├── cache.py             # TTL-based cache
 │   │   └── error_handler.py     # Error handling
+│   ├── tests/                   # Test suite
 │   ├── main.py                  # FastAPI application
 │   ├── requirements.txt
 │   ├── .env
@@ -239,37 +225,12 @@ Inkle ai assignment/
 │   ├── style.css               # Premium CSS styles
 │   └── script.js               # Frontend JavaScript
 ├── README.md
+├── SUBMISSION.md
+├── DEPLOYMENT.md
 └── .gitignore
 ```
 
-## 🎓 Alignment with Inkle AI Job Requirements
-
-This project demonstrates all key requirements from the AI Intern JD:
-
-| JD Requirement | Implementation |
-|----------------|----------------|
-| **Understanding of AI agent flows, LLMs** | LangGraph StateGraph with multi-agent orchestration |
-| **Process feature request into AI agent** | Parent agent analyzes intent and routes to child agents |
-| **Improve data availability and accuracy** | Caching, API validation, error handling |
-| **Troubleshoot and debug applications** | Comprehensive logging, custom exceptions |
-| **Perform UI tests to optimize performance** | Async API calls, lazy loading, animations |
-| **Enhance user experience** | Premium glassmorphic UI, micro-animations |
-| **Take responsibility of AI agent** | Complete end-to-end system ownership |
-| **Functional, cohesive codes** | Clean architecture with separated concerns |
-
 ## 🧪 Testing
-
-### Run Tests
-```bash
-cd backend
-pytest tests/ -v
-```
-
-### Coverage
-✅ Weather/Places agents  
-✅ Parent agent orchestration  
-✅ API endpoints & validation  
-✅ Rate limiting  
 
 ### Manual Testing Checklist
 
@@ -286,12 +247,12 @@ pytest tests/ -v
 
 You can test the API directly using the interactive docs:
 ```
-http://localhost:8000/docs
+https://inkle-ai-assignment.onrender.com/docs
 ```
 
 Or using curl:
 ```bash
-curl -X POST "http://localhost:8000/api/plan-trip" \
+curl -X POST "https://inkle-ai-assignment.onrender.com/api/plan-trip" \
   -H "Content-Type: application/json" \
   -d '{"location": "Bangalore"}'
 ```
@@ -302,7 +263,7 @@ Environment variables in `.env`:
 
 ```bash
 # API Configuration
-NOMINATIM_USER_AGENT=inkle-tourism-app
+NOMINATIM_USER_AGENT=tripmind-ai
 NOMINATIM_EMAIL=your-email@example.com
 
 # Server Configuration
@@ -340,16 +301,16 @@ CACHE_TTL_SECONDS=3600
 
 ## 📝 License
 
-This project is created as part of the Inkle AI internship assignment.
+This project was created as a demonstration of multi-agent AI systems.
 
 ## 👨‍💻 Author
 
 **Bharath Raj B L**  
-AI Intern Assignment - Inkle AI
+GitHub: https://github.com/BHARATH-RAJ-B-L
 
 ---
 
-**Note**: This project demonstrates understanding of:
+**Note**: This project demonstrates:
 - ✅ Multi-agent AI systems
 - ✅ LangGraph/LangChain frameworks
 - ✅ API integration and orchestration
@@ -357,4 +318,4 @@ AI Intern Assignment - Inkle AI
 - ✅ Error handling and debugging
 - ✅ Premium UI/UX design
 
-Built with ❤️ for Inkle AI Internship
+Built with ❤️ using Python, FastAPI, and LangGraph
