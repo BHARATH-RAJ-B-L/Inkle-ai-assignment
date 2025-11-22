@@ -1,12 +1,18 @@
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-httpx==0.25.1
-pydantic==2.5.0
+# Core FastAPI dependencies
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+httpx==0.26.0
+
+# Pydantic - use newer version with pre-built wheels
+pydantic==2.6.0
 pydantic-settings==2.1.0
 python-dotenv==1.0.0
-langgraph==0.0.26
-langchain==0.1.0
-langchain-core==0.1.10
-pytest==7.4.3
-pytest-asyncio==0.21.1
-langchain-openai==0.0.2
+
+# LangChain - updated versions with better compatibility
+langgraph==0.0.62
+langchain==0.1.20
+langchain-core==0.1.52
+langchain-openai==0.1.7
+
+# Note: pytest removed - not needed in production
+# Install separately for local testing: pip install pytest pytest-asyncio
