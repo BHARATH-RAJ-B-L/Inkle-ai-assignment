@@ -4,7 +4,7 @@
  */
 
 // Configuration
-const API_BASE_URL = 'https://web-production-bf77.up.railway.app';
+const API_BASE_URL = 'https://web-production-66a8.up.railway.app';
 
 // Loading messages for multi-agent feedback
 const loadingMessages = [
