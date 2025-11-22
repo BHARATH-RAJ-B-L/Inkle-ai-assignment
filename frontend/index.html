@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered multi-agent tourism planning system for weather and attraction recommendations">
+    <meta name="keywords" content="tourism, AI, travel planning, weather, attractions">
+    <title>TripMind AI - Your Intelligent Travel Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background gradient -->
+    <div class="background-gradient"></div>
+    
+    <!-- Main container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="18" stroke="url(#gradient)" stroke-width="2"/>
+                    <path d="M20 8L25 16H15L20 8Z" fill="url(#gradient)"/>
+                    <circle cx="20" cy="24" r="4" fill="url(#gradient)"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#667eea"/>
+                            <stop offset="100%" stop-color="#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>TripMind<span class="ai-badge">AI</span></h1>
+            </div>
+            <p class="tagline">Multi-Agent Tourism Intelligence System</p>
+        </header>
+
+        <!-- Hero section -->
+        <section class="hero">
+            <h2 class="hero-title">Plan Your Perfect Trip</h2>
+            <p class="hero-subtitle">Powered by advanced AI agents for weather & attractions</p>
+            
+            <!-- Search card -->
+            <div class="search-card glass-card">
+                <div class="search-wrapper">
+                    <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <input 
+                        type="text" 
+                        id="locationInput" 
+                        class="search-input" 
+                        placeholder="Where do you want to go? (e.g., Bangalore, Paris, Tokyo)"
+                        autocomplete="off"
+                    />
+                    <button id="planButton" class="plan-button">
+                        <span class="button-text">Explore</span>
+                        <svg class="button-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M3.75 10h12.5M10 3.75L16.25 10 10 16.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Loading state -->
+                <div id="loadingState" class="loading-state hidden">
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">AI agents analyzing your destination...</p>
+                </div>
+            </div>
+
+            <!-- Example queries -->
+            <div class="example-queries">
+                <span class="example-label">Try:</span>
+                <button class="example-chip" data-location="Bangalore">🇮🇳 Bangalore</button>
+                <button class="example-chip" data-location="Paris">🇫🇷 Paris</button>
+                <button class="example-chip" data-location="Tokyo">🇯🇵 Tokyo</button>
+            </div>
+        </section>
+
+        <!-- Results section -->
+        <section id="resultsSection" class="results-section hidden">
+            <!-- Error message -->
+            <div id="errorCard" class="error-card glass-card hidden">
+                <svg class="error-icon" width="48" height="48" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h3 class="error-title">Oops!</h3>
+                <p id="errorMessage" class="error-message"></p>
+            </div>
+
+            <!-- Success results -->
+            <div id="successResults" class="success-results">
+                <!-- Weather card -->
+                <div id="weatherCard" class="weather-card glass-card hidden">
+                    <div class="card-header">
+                        <svg class="card-icon weather-icon" width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Weather Forecast</h3>
+                    </div>
+                    <div class="weather-content">
+                        <div class="temperature-display">
+                            <span id="temperature" class="temperature">--</span>
+                            <span class="temperature-unit">°C</span>
+                        </div>
+                        <p id="weatherText" class="weather-description"></p>
+                        <div class="weather-details">
+                            <div class="weather-detail-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span id="precipitation" class="detail-value">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Places card -->
+                <div id="placesCard" class="places-card glass-card hidden">
+                    <div class="card-header">
+                        <svg class="card-icon places-icon" width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h3>Top Attractions</h3>
+                    </div>
+                    <div class="places-content">
+                        <p class="places-intro">These are the places you can explore:</p>
+                        <ul id="placesList" class="places-list">
+                            <!-- Places will be inserted here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by <strong>LangGraph</strong> Multi-Agent AI</p>
+            <p class="footer-note">Demonstrates AI agent flows, LLM orchestration & premium UX design</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

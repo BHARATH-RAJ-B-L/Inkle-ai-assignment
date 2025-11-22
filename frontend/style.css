@@ -1,0 +1,577 @@
+/* ============================================
+   TripMind AI - Premium Tourism System Styles
+   ============================================ */
+
+/* === CSS Variables & Design Tokens === */
+:root {
+    /* Color Palette - Rich & Premium */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    
+    --primary-color: #667eea;
+    --primary-dark: #5568d3;
+    --secondary-color: #764ba2;
+    --accent-color: #f5576c;
+    
+    /* Neutral Colors */
+    --bg-dark: #0f0f23;
+    --bg-card: rgba(255, 255, 255, 0.08);
+    --bg-card-hover: rgba(255, 255, 255, 0.12);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.25);
+    --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.3);
+    
+    /* Transitions */
+    --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === Global Styles === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--text-primary);
+    background-color: var(--bg-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* === Background Gradient === */
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+}
+
+/* === Container === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+/* === Glass Card Effect === */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.glass-card:hover {
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* === Header === */
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.logo h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ai-badge {
+    font-size: 1.2rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-sm);
+    margin-left: var(--spacing-xs);
+}
+
+.tagline {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* === Hero Section === */
+.hero {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-xl);
+}
+
+/* === Search Card === */
+.search-card {
+    max-width: 700px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    position: relative;
+}
+
+.search-icon {
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    font-family: var(--font-primary);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: all var(--transition-base);
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.plan-button {
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 1rem 2rem;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.plan-button:hover {
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+.plan-button:active {
+    transform: translateY(0);
+}
+
+.button-icon {
+    transition: transform var(--transition-base);
+}
+
+.plan-button:hover .button-icon {
+    transform: translateX(4px);
+}
+
+/* === Loading State === */
+.loading-state {
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    animation: fadeIn var(--transition-base);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* === Example Queries === */
+.example-queries {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.example-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.example-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.example-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+/* === Results Section === */
+.results-section {
+    margin-top: var(--spacing-xl);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.success-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+/* === Cards === */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.card-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.card-icon {
+    color: var(--primary-color);
+}
+
+/* === Weather Card === */
+.weather-card {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.weather-content {
+    text-align: center;
+}
+
+.temperature-display {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.temperature {
+    font-size: 4rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.temperature-unit {
+    font-size: 2rem;
+    color: var(--text-secondary);
+    margin-left: 0.25rem;
+}
+
+.weather-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.weather-details {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.weather-detail-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    font-weight: 600;
+}
+
+/* === Places Card === */
+.places-card {
+    background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(240, 147, 251, 0.1) 100%);
+}
+
+.places-intro {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.places-list {
+    list-style: none;
+}
+
+.places-list li {
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--accent-color);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    animation: slideInLeft 0.4s ease-out backwards;
+}
+
+.places-list li:nth-child(1) { animation-delay: 0.1s; }
+.places-list li:nth-child(2) { animation-delay: 0.2s; }
+.places-list li:nth-child(3) { animation-delay: 0.3s; }
+.places-list li:nth-child(4) { animation-delay: 0.4s; }
+.places-list li:nth-child(5) { animation-delay: 0.5s; }
+
+.places-list li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-left-color: var(--primary-color);
+    transform: translateX(8px);
+}
+
+/* === Error Card === */
+.error-card {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(254, 97, 75, 0.1) 100%);
+    border-color: rgba(245, 87, 108, 0.3);
+}
+
+.error-icon {
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.error-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.error-message {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+/* === Footer === */
+.footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.footer strong {
+    color: var(--primary-color);
+}
+
+.footer-note {
+    margin-top: var(--spacing-xs);
+    font-size: 0.85rem;
+}
+
+/* === Utility Classes === */
+.hidden {
+    display: none !important;
+}
+
+/* === Animations === */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-md);
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .search-wrapper {
+        flex-direction: column;
+    }
+    
+    .plan-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .success-results {
+        grid-template-columns: 1fr;
+    }
+    
+    .temperature {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .search-input {
+        font-size: 1rem;
+    }
+}
