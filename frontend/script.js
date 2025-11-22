@@ -4,7 +4,7 @@
  */
 
 // Configuration
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://web-production-bf77.up.railway.app';
 
 // Loading messages for multi-agent feedback
 const loadingMessages = [
