@@ -4,7 +4,7 @@
  */
 
 // Configuration
-const API_BASE_URL = 'https://web-production-66a8.up.railway.app';
+const API_BASE_URL = ''; // Empty string for same domain (Vercel will route /api to backend)
 
 // Loading messages for multi-agent feedback
 const loadingMessages = [
